@@ -1,0 +1,21 @@
+Percentage = 0,001
+
+R Bereich Von -2,5 bis 1
+I Bereich -1 bis 1
+
+C RealTeil = 0,001 * 3,5 + -0,75 - 3,5 / 2 = 2| xPercentage * BereichReeleZahlen + mittelReel - BereichReeleZahlen / 2;
+C ImagTeil = 0,001 * 2 + 0 - 2 /2 = 2	      | yPercentage * BereichImaginaer + mittelImaginaer - BereichImaginaer / 2;
+
+
+mapteil:
+
+Currentpixel 1/1
+lowerBoundsInput 0
+upperBoundsInput 1000
+lowerBoundsScala -2.5 
+upperBoundsScala 3.5 
+
+map = (1 - 0) * (3.5  - -2.5) / (1000 - 0) + -2.5; = -2,494 | (currentPixel - lowerBoundsInput) * (upperBoundsScala - lowerBoundsScala) / (upperBoundsInput - lowerBoundsInput) + lowerBoundsScala;
+
+
+(1 - 0) * (1 - 2,5) / (1000 - 0) -2,5; = -2,494
