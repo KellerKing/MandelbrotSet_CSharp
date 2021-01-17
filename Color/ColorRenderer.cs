@@ -13,8 +13,10 @@ namespace MandelbrotSet
   {
     public static Color getSmoothedColor(int iterator, double zReal, double zIm, int maxIterations)
     {
-      var index = Math.Min(iterator, ColorPallete.pallete.Length -1);
-      return ColorPallete.pallete[index];
+      var smoothColor = iterator - Math.Log(Ma)
+
+      //var index = Math.Min(iterator, ColorPallete.pallete.Length -1);
+      //return ColorPallete.pallete[index];
     }
 
 

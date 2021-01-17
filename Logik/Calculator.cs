@@ -42,5 +42,13 @@ namespace MandelbrotSet
         complexNumber.Item1 * complexNumber.Item2 * 2
         );
     }
+
+    public static Tuple<double, double> LogOfComplexNumber(Tuple<double, double> complexNumber)
+    {
+      var real = 0.5 * Math.Log(complexNumber.Item1 * complexNumber.Item1 + complexNumber.Item2 * complexNumber.Item2);
+      var imaginary = Math.Atan(complexNumber.Item1 / complexNumber.Item2);
+
+      return Tuple.Create(real, imaginary);
+    }
   }
 }
