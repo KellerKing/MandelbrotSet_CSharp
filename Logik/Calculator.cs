@@ -8,7 +8,7 @@ namespace MandelbrotSet
 {
   public class Calculator
   {
-    public static Tuple<bool, int, double, double> IsGegenUnendlich(int n, Tuple<double, double> c)
+    public static Tuple<bool, int, double, double, int, int> IsGegenUnendlich(int n, Tuple<double, double> c, int xPos, int yPos)
     {
       var i = 0;
       var zReal = 0.0;
@@ -23,7 +23,7 @@ namespace MandelbrotSet
         i++;
       }
 
-      return n > i ? Tuple.Create(true, i, zReal, zIm) : Tuple.Create(false, i, zReal, zIm);
+      return n > i ? Tuple.Create(true, i, zReal, zIm, xPos,yPos) : Tuple.Create(false, i, zReal, zIm, xPos, yPos);
     }
 
 
@@ -49,6 +49,11 @@ namespace MandelbrotSet
       var imaginary = Math.Atan(complexNumber.Item1 / complexNumber.Item2);
 
       return Tuple.Create(real, imaginary);
+    }
+
+    public static Tuple<double, double> AbsOfComplexNumber(Tuple<double, double> complexNumber)
+    {
+      return Tuple.Create(Math.Abs(complexNumber.Item1), Math.Abs(complexNumber.Item2));
     }
   }
 }

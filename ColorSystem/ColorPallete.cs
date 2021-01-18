@@ -9,7 +9,7 @@ namespace MandelbrotSet
 {
   class ColorPallete
   {
-    public static readonly Color[] pallete = new Color[]
+    public static readonly System.Drawing.Color[] pallete = new Color[]
       {
         Color.FromArgb(0,0,0),
         Color.FromArgb(0,0,0),

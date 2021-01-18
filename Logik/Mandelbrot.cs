@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,18 +20,19 @@ namespace MandelbrotSet
 
 
 
-    public static async Task<Tuple<bool, int, double, double>> CalcMandelForPoint(int x, int y, int windowWidth, int windowHeight, int n)
+    public static Tuple<bool, int, double, double, int,int> CalcMandelForPoint(int x, int y, int windowWidth, int windowHeight, int n, 
+                                                                                  double lowerBoundsScalaX, double upperBoundsScalaX, 
+                                                                                  double lowerBoundsScalaY, double upperBoundsScalaY)
     {
-      double lowerBoundsScalaX = -2.5;
-      double upperBoundsScalaX = 1.5;
+      //double lowerBoundsScalaX = -2.5;
+      //double upperBoundsScalaX = 1.5;
 
-      double lowerBoundsScalaY = -1;
-      double upperBoundsScalaY = 1.25;
-
+      //double lowerBoundsScalaY = -1;
+      //double upperBoundsScalaY = 1.25;
       var cReal = MapPxielToKoordinatenSystem(x, 0, windowWidth, lowerBoundsScalaX, upperBoundsScalaX);
       var cIm = MapPxielToKoordinatenSystem(y, 0, windowHeight, lowerBoundsScalaY, upperBoundsScalaY);
 
-      return Calculator.IsGegenUnendlich(n, Tuple.Create(cReal, cIm));
+      return Calculator.IsGegenUnendlich(n, Tuple.Create(cReal, cIm), x, y);
       //Zn = Z^2 + c
       //Z0 = 0 --> Z1 = c 
 

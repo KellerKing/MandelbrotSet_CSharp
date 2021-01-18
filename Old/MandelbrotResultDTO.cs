@@ -10,6 +10,6 @@ namespace MandelbrotSet
   public record MandelbrotResultDTO
   {
     public Point Location { get; init; }
-    public Color Color { get; init; }
+    public System.Drawing.Color Color { get; init; }
   }
 }

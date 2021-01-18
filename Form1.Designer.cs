@@ -33,13 +33,15 @@ namespace WindowsFormsApp1
       // 
       // Form1
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1178, 844);
+      this.ClientSize = new System.Drawing.Size(1356, 785);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+      this.Margin = new System.Windows.Forms.Padding(2);
       this.Name = "Form1";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Text = "Form1";
+      this.Text = "7";
+      this.Shown += new System.EventHandler(this.Form1_Shown);
       this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
       this.ResumeLayout(false);
 
