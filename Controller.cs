@@ -19,7 +19,7 @@ namespace MandelbrotSet
     double lowerBoundsScalaY = -1;
     double upperBoundsScalaY = 1.25;
 
-    int n = 5;
+    int n = 50;
 
     public Controller(Form1 form)
     {
@@ -48,8 +48,7 @@ namespace MandelbrotSet
                                                           lowerBoundsScalaY, upperBoundsScalaY, n);
 
 
-      ColorRenderer.DrawColorOnScreen(points, n, app1);
-      GC.Collect();
+    ColorRenderer.DrawColorOnScreenAsync(points, n, app1).Wait();
 
 
     }

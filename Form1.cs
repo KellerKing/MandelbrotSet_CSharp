@@ -36,7 +36,7 @@ namespace WindowsFormsApp1
 
     public void PaintPixel(int x, int y, SolidBrush b)
     {
-      this.CreateGraphics().FillRectangle(b, x, y, 1, 1);
+      g.FillRectangle(b, x, y, 1, 1);
     }
 
     private void Form1_MouseWheel(object sender, MouseEventArgs e)
@@ -84,7 +84,13 @@ namespace WindowsFormsApp1
 
     private async void Form1_Shown(object sender, EventArgs e)
     {
-      Task.Run(() => new Controller(this));
+
+      var start = DateTime.Now;
+
+      await Task.Run(() => new Controller(this));
+
+
+      Debug.Print((DateTime.Now - start).ToString());
     }
   }
 }
