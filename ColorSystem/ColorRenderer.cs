@@ -14,40 +14,36 @@ namespace MandelbrotSet
 {
   class ColorRenderer
   {
-    public static async Task DrawColorOnScreenAsync(List<Tuple<bool, int, double, double, int, int>> p, int maxIteration, Form1 form)
+    public static async void DrawColorOnScreenAsync(List<Tuple<bool, int, double, double, int, int>> p, int maxIteration, Form1 form)
     {
 
-      var b = new SolidBrush(Color.Black);
 
-
-      //p.ForEach(p1 =>
+      //var tasks = new List<Task>();
+      //foreach (var p1 in p)
       //{
-      // // Debug.Print($"X:{p1.Item5} | Y: {p1.Item6}");
-      //  b.Color = GetRGBColor(p1, maxIteration);
-      //  form.PaintPixel(p1.Item5, p1.Item6, b);
-      // // g.FillRectangle(b, p1.Item5, p1.Item6, 1, 1);
-      //});
+      //  tasks.Add(Task.Run(() =>
+      //    form.PaintPixel(p1.Item5, p1.Item6, new SolidBrush(GetRGBColor(p1, maxIteration)))));
 
-      //Parallel.ForEach(p, async (p1)  =>
-      //{
-      //  b.Color = await Task.Run(() => GetRGBColor(p1, maxIteration));
-      //  form.PaintPixel(p1.Item5, p1.Item6, b);
-      //});
+      //}
 
-      var tasks = new List<Task>();
+
+      //await Task.WhenAll(tasks);
+    }
+
+
+    public static async Task<List<Tuple<int, int, Color>>> ColoredPixel(List<Tuple<bool, int, double, double, int, int>> p, int maxIteration)
+    {
+      var tasks = new List<Task<Tuple<int, int, Color>>>();
       foreach (var p1 in p)
       {
         tasks.Add(Task.Run(() =>
-          form.PaintPixel(p1.Item5, p1.Item6, new SolidBrush(GetRGBColor(p1, maxIteration)))));
-        
+         Tuple.Create(p1.Item5, p1.Item6, GetRGBColor(p1, maxIteration))
+         ));
       }
 
 
-      await Task.WhenAll(tasks);
-      // return iterator < maxIterations ? ColorConversion.HsvToRgb(color, 1, 1) : Color.Black;
-
-      //var index = Math.Min(iterator, ColorPallete.pallete.Length -1);
-      //return ColorPallete.pallete[index];
+      var res = await Task.WhenAll(tasks);
+      return res.ToList();
     }
 
 
@@ -60,10 +56,6 @@ namespace MandelbrotSet
 
       return point.Item2 < maxIteration ? ColorConversion.HsvToRgb(color, 1, 1) : Color.Black;
     }
-
-
-
-
 
   }
 }

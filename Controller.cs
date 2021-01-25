@@ -25,33 +25,30 @@ namespace MandelbrotSet
     {
       app1 = form;
       ConnectEvents();
-      BerechneMandelbrot();
+      
     }
 
     private void ConnectEvents()
     {
       app1.MouseScrolled += MouseScrolled;
+      app1.mandelbrotStart += CreateMandelbrot;
     }
 
+    private async void CreateMandelbrot()
+    {
+      var points = await BerechneMandelbrotAsync();
+      var calculatedPixels = await ColorRenderer.ColoredPixel(points, n);
+      app1.PaintPixel(calculatedPixels);
+    }
 
     private void MouseScrolled(int delta)
     {
       Debug.Print(delta.ToString());
     }
 
-    private async void BerechneMandelbrot()
-    {
-
-
-      var points = await MandelbrotBerechner.GetBerechnetePoints(app1.Width, app1.Height,
+    private async Task<List<Tuple<bool, int, double, double, int, int>>> BerechneMandelbrotAsync() => await MandelbrotBerechner.GetBerechnetePoints(app1.BitmapResolution()[0], app1.BitmapResolution()[1],
                                                           lowerBoundsScalaX, upperBoundsScalaX,
-                                                          lowerBoundsScalaY, upperBoundsScalaY, n);
-
-
-    ColorRenderer.DrawColorOnScreenAsync(points, n, app1).Wait();
-
-
-    }
+                                                          lowerBoundsScalaY, upperBoundsScalaY, n);//var splittedPoints = Helper.SegmentCalculatedNumbers(//  await MandelbrotBerechner.GetBerechnetePoints(app1.Width, app1.Height,//                                           lowerBoundsScalaX, upperBoundsScalaX,//                                           lowerBoundsScalaY, upperBoundsScalaY, n), Environment.ProcessorCount);//splittedPoints.ForEach(async p  => await ColorRenderer.DrawColorOnScreenAsync(p, n, app1));//ColorRenderer.DrawColorOnScreenAsync(points, n, app1);
 
 
   }

@@ -8,18 +8,18 @@ namespace MandelbrotSet
 {
   class Helper
   {
-    public static Tuple<int, int>[] GetPixelsAsArray(int w, int h)
+    public static List<List<Tuple<bool, int, double, double, int, int>>> SegmentCalculatedNumbers(List<Tuple<bool, int, double, double, int, int>> results, int coreCount)
     {
 
-      var output = new Tuple<int, int>[w * h];
+      var output = new List<List<Tuple<bool, int, double, double, int, int>>>();
 
-      for (int x = 0; x < w; x++)
+      var steps = results.Count / coreCount;
+
+      for (int i = 1; i < results.Count; i+= steps)
       {
-        for (int y = 0; y < h; y++)
-        {
-          output[x * y] = Tuple.Create(x, y);
-        }
+        output.Add(results.GetRange(i-1, steps));
       }
+
       return output;
     }
   }

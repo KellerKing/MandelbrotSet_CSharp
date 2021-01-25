@@ -15,82 +15,67 @@ namespace WindowsFormsApp1
   public partial class Form1 : Form
   {
 
-    double lowerBoundsScalaX = -2.5;
-    double upperBoundsScalaX = 1.5;
+    private Bitmap bm;
+    private Graphics gbm;
 
-    double lowerBoundsScalaY = -1;
-    double upperBoundsScalaY = 1.25;
 
-    public Graphics g { get => this.CreateGraphics(); }
-
+    public Action mandelbrotStart;
     public Action<int> MouseScrolled;
 
-    private static SolidBrush b = new SolidBrush(Color.Black);
 
     public Form1()
     {
       InitializeComponent();
-      this.MouseWheel += Form1_MouseWheel;
-      
+      this.MouseWheel += Form1_MouseWheel; //TODO: Needs Work
+
+
+      var bmW = this.Width - 60;
+      var bmH = this.Height - 80;
+      bm = new Bitmap(bmW, bmH);
+
+      gbm = Graphics.FromImage(bm);
     }
 
-    public void PaintPixel(int x, int y, SolidBrush b)
+    public void PaintPixel(List<Tuple<int,int,Color>> p)
     {
-      g.FillRectangle(b, x, y, 1, 1);
+      var brush = new SolidBrush(Color.White);
+
+      p.ForEach(p1 =>
+      {
+        brush.Color = p1.Item3;
+        gbm.FillRectangle(brush,p1.Item1, p1.Item2, 1, 1);
+        
+      });
+      Refresh();
+
+      //gbm.Clear(Color.White);
     }
 
     private void Form1_MouseWheel(object sender, MouseEventArgs e)
     {
-      //if (e.Delta > 0)
-      //{
-      //  upperBoundsScalaY *= 0.2;
-      //  lowerBoundsScalaY = Math.Abs(lowerBoundsScalaX *= 5);
-
-      //  upperBoundsScalaX *= 0.2;
-      //  lowerBoundsScalaX = Math.Abs(lowerBoundsScalaX *= 5);
-      //}
-      //else
-      //{
-      //  upperBoundsScalaY *= 5;
-      //  lowerBoundsScalaY *= 0.2;
-      //}
-      //Refresh();
       MouseScrolled.Invoke(e.Delta);
     }
 
-    private async void Form1_Paint(object sender, PaintEventArgs e)
+    private void Form1_Paint(object sender, PaintEventArgs e)
     {
-      //var g = e.Graphics;
-
-
-
-
-
-      //var iterations = 50;
-
-
-      //for (int x = 0; x < this.Width; x++)
-      //{
-      //  for (int y = 0; y < this.Height; y++)
-      //  {
-      //    var result = await Mandelbrot.CalcMandelForPoint(x, y, Width, Height, iterations, lowerBoundsScalaX, upperBoundsScalaX, lowerBoundsScalaY, upperBoundsScalaY);
-
-      //    b.Color = ColorRenderer.getSmoothedColor(result.Item2, result.Item3, result.Item4, iterations);
-
-      //    g.FillRectangle(b, x, y, 1, 1);
-      //  }
-      //}
+      e.Graphics.DrawImage(bm, 20, 20);
     }
 
     private async void Form1_Shown(object sender, EventArgs e)
     {
-
-      var start = DateTime.Now;
-
-      await Task.Run(() => new Controller(this));
-
-
-      Debug.Print((DateTime.Now - start).ToString());
+      new Controller(this);
     }
+
+
+    private void btn_Mandelbrot_Click(object sender, EventArgs e)
+    {
+      var start = DateTime.Now;
+      mandelbrotStart.Invoke();
+      Debug.Print((DateTime.Now - start).ToString());
+
+    }
+
+
+    public int[] BitmapResolution() => new int[] { bm.Width, bm.Height };
   }
 }
