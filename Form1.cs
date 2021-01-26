@@ -36,17 +36,25 @@ namespace WindowsFormsApp1
       gbm = Graphics.FromImage(bm);
     }
 
-    public void PaintPixel(List<Tuple<int,int,Color>> p)
+    public async void PaintPixel(List<Tuple<int,int,Color>> p)
     {
       var brush = new SolidBrush(Color.White);
+      var ticks = 0;
 
       p.ForEach(p1 =>
       {
+        ticks++;
         brush.Color = p1.Item3;
-        gbm.FillRectangle(brush,p1.Item1, p1.Item2, 1, 1);
-        
+        gbm.FillRectangle(brush, p1.Item1, p1.Item2, 1, 1);
+
+        if(ticks == 1024)
+        {
+          Refresh();
+          ticks = 0;
+        }
+
       });
-      Refresh();
+      
 
       //gbm.Clear(Color.White);
     }
@@ -61,7 +69,7 @@ namespace WindowsFormsApp1
       e.Graphics.DrawImage(bm, 20, 20);
     }
 
-    private async void Form1_Shown(object sender, EventArgs e)
+    private void Form1_Shown(object sender, EventArgs e)
     {
       new Controller(this);
     }
