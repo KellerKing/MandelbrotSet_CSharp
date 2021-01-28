@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,13 @@ namespace MandelbrotSet
 
     int n = 50;
 
+    Task<List<Tuple<int, int, Color>>> calculatedPixels;
+
     public Controller(Form1 form)
     {
       app1 = form;
       ConnectEvents();
-      
+      CalculatePixels();
     }
 
     private void ConnectEvents()
@@ -34,11 +37,21 @@ namespace MandelbrotSet
       app1.mandelbrotStart += CreateMandelbrot;
     }
 
-    private async void CreateMandelbrot()
+    private async void CalculatePixels()
     {
       var points = await BerechneMandelbrotAsync();
-      var calculatedPixels = await ColorRenderer.ColoredPixel(points, n);
-      app1.PaintPixel(calculatedPixels);
+      calculatedPixels = ColorRenderer.ColoredPixel(points, n);
+    }
+
+    private async void CreateMandelbrot()
+    {
+
+      while (calculatedPixels is null || !calculatedPixels.IsCompleted) 
+      {
+
+      } 
+
+      app1.PaintPixel(calculatedPixels.Result);
     }
 
     private void MouseScrolled(int delta)

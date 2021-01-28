@@ -66,12 +66,12 @@ namespace WindowsFormsApp1
 
     private void Form1_Paint(object sender, PaintEventArgs e)
     {
-      e.Graphics.DrawImage(bm, 20, 20);
+      e.Graphics.DrawImage(bm, 0, 0);
     }
 
     private void Form1_Shown(object sender, EventArgs e)
     {
-      new Controller(this);
+      Task.Run(() => new Controller(this));
     }
 
 
